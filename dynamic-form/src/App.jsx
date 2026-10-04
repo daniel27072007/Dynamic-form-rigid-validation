@@ -22,11 +22,39 @@ function App() {
             <div className="space-y-4">
               <h2 className="text-lg font-medium text-neutral-200">Personal Data</h2>
               <p className="text-xs text-neutral-400 mb-4">Please, insert your personal information bellow.</p>
-              {/* O esqueleto dos inputs do Passo 1 vai entrar aqui */}
-              <div className="h-32 border border-dashed border-neutral-700 rounded-lg bg-neutral-900/40 flex items-center justify-center text-neutral-500">
-                [Inputs de Nome, Email, CPF e Celular vão aqui]
+                <div id="inputBox" className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">Full Name</label>
+                  <input
+                   type="text"
+                   placeholder="Type your name"
+                   className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                </div>
+                <div id="inputBox" className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">E-mail</label>
+                  <input
+                   type="email"
+                   placeholder="exemple@email.com"
+                   className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                </div>
+                <div id="inputBox" className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">CPF</label>
+                  <input
+                   type="text"
+                   placeholder="000.000.000-00"
+                   className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                </div>
+                <div id="inputBox" className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">Phone Number</label>
+                  <input
+                   type="text"
+                   placeholder="(00) 00000-0000"
+                   className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                </div>
               </div>
-            </div>
           )}
 
           {step === 2 && (
@@ -62,7 +90,7 @@ function App() {
           <button 
             onClick={nextStep} 
             disabled={step === 3} 
-            className="px-8 py-2.5 text-sm font-medium rounded-full bg-[#FF5A00] hover:bg-[#e04f00] text-white shadow-md disabled:opacity-40 disabled:pointer-events-none transition-colors"
+            className="px-8 py-2.5 text-sm font-medium rounded-full bg-[#FF5A00] hover:bg-[#e04f00] text-white shadow-md disabled:opacity-40 disabled:pointer-events-none transition-colors "
           >
             {step === 3 ? "Submit" : "Next"}
           </button>
