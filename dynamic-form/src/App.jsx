@@ -16,7 +16,7 @@ function App() {
             Step {step} of 3
           </span>
         </div>
-        <form action="#">
+        <form>
           <div>
             {step === 1 && (
               <div className="space-y-4">
@@ -100,8 +100,6 @@ function App() {
             ) : (
               <button
                 type="submit"
-                onClick={nextStep} 
-                disabled={step === 3} 
                 className="px-8 py-2.5 text-sm font-medium rounded-full bg-[#FF5A00] hover:bg-[#e04f00] text-white shadow-md disabled:opacity-40 disabled:pointer-events-none transition-colors "
               >
                 Submit
