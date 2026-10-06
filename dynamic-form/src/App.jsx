@@ -61,8 +61,55 @@ function App() {
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-200">Address</h2>
                 <p className="text-xs text-neutral-400 mb-4">Insert you CEP to autocomplete the form or type them manualy.</p>
-                <div className="h-32 border border-dashed border-neutral-700 rounded-lg bg-neutral-900/40 flex items-center justify-center text-neutral-500">
-                  [Inputs de Endereço vão aqui]
+                {/* Grid: Street e Number */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-1.5 col-span-2">
+                    <label className="text-sm font-medium text-gray-300">Street</label>
+                    <input
+                      type="text"
+                      placeholder="Rua, Avenida..."
+                      className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-gray-300">Number</label>
+                    <input
+                      type="text"
+                      placeholder="123"
+                      className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Campo: Neighborhood */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">Neighborhood</label>
+                  <input
+                    type="text"
+                    placeholder="Bairro"
+                    className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                </div>
+
+                {/* Grid: City e State */}
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  <div className="flex flex-col gap-1.5 sm:col-span-3">
+                    <label className="text-sm font-medium text-gray-300">City</label>
+                    <input
+                      type="text"
+                      placeholder="Cidade"
+                      className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-gray-300">State</label>
+                    <input
+                      type="text"
+                      placeholder="SP"
+                      maxLength={2}
+                      className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] text-center uppercase transition-all"
+                    />
+                  </div>
                 </div>
               </div>
             )}
