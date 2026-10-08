@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { formStepsSchemas } from "./schemas/formSchema.js"
 
 function App() {
@@ -9,7 +9,12 @@ function App() {
 
   const { register, handleSubmit, formState: { errors }, trigger } = useForm({ resolver: zodResolver(currentSchema), mode: "onChange" }) 
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3))
+  const nextStep = async () => {
+    isValid = await trigger()
+    if(isValid){
+      setStep((prev) => Math.min(prev + 1, 3))
+    }
+  }
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1))
 
   return (
@@ -22,7 +27,7 @@ function App() {
             Step {step} of 3
           </span>
         </div>
-        <form>
+        <form onSubmit={handleSubmit(()=> console.log("data in the form sent"))}>
           <div>
             {step === 1 && (
               <div className="space-y-4">
@@ -33,32 +38,48 @@ function App() {
                     <input
                     type="text"
                     placeholder="Type your name"
+                    {...register("name")}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.name && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.name.message}</span>
+                    )}
                   </div>
                   <div id="inputBox" className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-gray-300">E-mail</label>
                     <input
                     type="email"
                     placeholder="exemple@email.com"
+                    {...register("email")}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.email && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.email.message}</span>
+                    )}
                   </div>
                   <div id="inputBox" className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-gray-300">CPF</label>
                     <input
                     type="text"
                     placeholder="000.000.000-00"
+                    {...register("cpf")}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.cpf && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.cpf.message}</span>
+                    )}
                   </div>
                   <div id="inputBox" className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-gray-300">Phone Number</label>
                     <input
                     type="text"
                     placeholder="(00) 00000-0000"
+                    {...register("phone")}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.phone && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.phone.message}</span>
+                    )}
                   </div>
                 </div>
             )}
