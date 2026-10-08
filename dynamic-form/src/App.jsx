@@ -7,8 +7,8 @@ function App() {
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1))
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white p-4 text-white font-sans">
-      <div className="w-full max-w-5xl min-h-max rounded-lg bg-[#111111] p-10 shadow-2xl">
+    <div className="flex min-h-screen items-center justify-center bg-black p-4 text-white font-sans">
+      <div className="w-full max-w-5xl min-h-max border-4 border-[#FF5A00] rounded-lg bg-[#111111] p-10 shadow-2xl">
         {/* Indicador Visual de Progresso */}
         <div className="mb-8 flex items-center justify-between border-b border-neutral-800 pb-4">
           <h1 className="text-2xl font-normal tracking-wide text-neutral-100">Register</h1>
