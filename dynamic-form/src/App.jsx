@@ -10,7 +10,7 @@ function App() {
   const { register, handleSubmit, formState: { errors }, trigger } = useForm({ resolver: zodResolver(currentSchema), mode: "onChange" }) 
 
   const nextStep = async () => {
-    isValid = await trigger()
+    const isValid = await trigger()
     if(isValid){
       setStep((prev) => Math.min(prev + 1, 3))
     }
@@ -87,7 +87,22 @@ function App() {
             {step === 2 && (
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-200">Address</h2>
-                <p className="text-xs text-neutral-400 mb-4">Insert you CEP to autocomplete the form or type them manualy.</p>
+                <p className="text-xs text-neutral-400 mb-4">Insert your CEP to autocomplete the form or type them manually.</p>
+                
+                {/* NOVO CAMPO: CEP (Necessário pois está na sua schema do Zod) */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-300">CEP</label>
+                  <input
+                    type="text"
+                    placeholder="00000-000"
+                    {...register("cep")}
+                    className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
+                  />
+                  {errors.cep && (
+                    <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.cep.message}</span>
+                  )}
+                </div>
+
                 {/* Grid: Street e Number */}
                 <div className="grid grid-cols-3 gap-4">
                   <div className="flex flex-col gap-1.5 col-span-2">
@@ -95,16 +110,24 @@ function App() {
                     <input
                       type="text"
                       placeholder="Rua, Avenida..."
+                      {...register("street")}
                       className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.street && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.street.message}</span>
+                    )}
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-gray-300">Number</label>
                     <input
                       type="text"
                       placeholder="123"
+                      {...register("number")}
                       className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.number && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.number.message}</span>
+                    )}
                   </div>
                 </div>
 
@@ -114,8 +137,12 @@ function App() {
                   <input
                     type="text"
                     placeholder="Bairro"
+                    {...register("neighborhood")}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                   />
+                  {errors.neighborhood && (
+                    <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.neighborhood.message}</span>
+                  )}
                 </div>
 
                 {/* Grid: City e State */}
@@ -125,8 +152,12 @@ function App() {
                     <input
                       type="text"
                       placeholder="Cidade"
+                      {...register("city")}
                       className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
+                    {errors.city && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.city.message}</span>
+                    )}
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-gray-300">State</label>
@@ -134,8 +165,12 @@ function App() {
                       type="text"
                       placeholder="SP"
                       maxLength={2}
+                      {...register("state")}
                       className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] text-center uppercase transition-all"
                     />
+                    {errors.state && (
+                      <span className="text-xs font-medium text-red-500 mt-1 pl-1">{errors.state.message}</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -168,10 +203,14 @@ function App() {
                     </div>
                     
                     {/* Input escondido para usarmos a estilização customizada acima */}
-                    <input type="file" accept="image/*,application/pdf" className="hidden" />
+                    <input type="file" accept="image/*,application/pdf" {...register("file")} className="hidden"/>
                   </label>
                 </div>
-
+                {errors.file && (
+                  <span className="text-xs font-medium text-red-500 mt-1 pl-1 block text-center">
+                    {errors.file.message}
+                  </span>
+                )}
                 {/* Container para o Preview do Arquivo (Ficará invisível por enquanto) */}
                 <div className="hidden rounded-lg bg-neutral-900/20 border border-neutral-800 p-3 flex items-center justify-between">
                   <span className="text-xs text-neutral-400 truncate max-w-[80%]">[Preview do arquivo selecionado]</span>
