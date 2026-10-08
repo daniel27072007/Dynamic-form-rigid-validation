@@ -1,7 +1,13 @@
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers"
+import { formStepsSchemas } from "./schemas/formSchema.js"
 
 function App() {
   const [ step, setStep ] = useState(1)
+  const currentSchema = formStepsSchemas[step - 1]
+
+  const { register, handleSubmit, formState: { errors }, trigger } = useForm({ resolver: zodResolver(currentSchema), mode: "onChange" }) 
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 3))
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1))
