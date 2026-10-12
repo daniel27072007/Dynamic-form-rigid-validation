@@ -45,6 +45,30 @@ function App() {
     }
   }, [cepValue, setValue])
 
+  const formatCPF = (value) => {
+    const nums = value.replace(/\D/g, "")
+    return nums
+      .replace(/(\d{3})(\d{1})/, "$1.$2")
+      .replace(/(\d{3})(\d{1})/, "$1.$2")
+      .replace(/(\d{3})(\d{1})/, "$1-$2")
+      .substring(0, 14)
+  }
+
+  const formatPhone = (value) => {
+    const nums = value.replace(/\D/g, "");
+    return nums
+      .replace(/(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d{1,4})$/, "$1-$2")
+      .substring(0, 15);
+  };
+
+  const formatCEP = (value) => {
+    const nums = value.replace(/\D/g, "");
+    return nums
+      .replace(/(\d{5})(\d{1,3})$/, "$1-$2")
+      .substring(0, 9);
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-black p-4 text-white font-sans">
       <div className="w-full max-w-5xl min-h-max border-4 border-[#FF5A00] rounded-lg bg-[#111111] p-10 shadow-2xl">
@@ -90,7 +114,7 @@ function App() {
                     <input
                     type="text"
                     placeholder="000.000.000-00"
-                    {...register("cpf")}
+                    {...register("cpf", { onChange: (e) => e.target.value = formatCPF(e.target.value)})}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
                     {errors.cpf && (
@@ -102,7 +126,7 @@ function App() {
                     <input
                     type="text"
                     placeholder="(00) 00000-0000"
-                    {...register("phone")}
+                    {...register("phone", { onChange: (e) => e.target.value = formatPhone(e.target.value)})}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                     />
                     {errors.phone && (
@@ -123,7 +147,7 @@ function App() {
                   <input
                     type="text"
                     placeholder="00000-000"
-                    {...register("cep")}
+                    {...register("cep", { onChange: (e) => e.target.value = formatCEP(e.target.value)})}
                     className="w-full rounded-lg bg-gray-700/50 border border-gray-600 px-4 py-2.5 text-gray-100 placeholder-gray-500 outline-none focus:border-[#FF5A00] focus:ring-1 focus:ring-[#FF5A00] transition-all"
                   />
                   {errors.cep && (
