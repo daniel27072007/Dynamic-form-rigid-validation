@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formStepsSchemas } from "./schemas/formSchema.js"
@@ -7,7 +7,7 @@ function App() {
   const [ step, setStep ] = useState(1)
   const currentSchema = formStepsSchemas[step - 1]
 
-  const { register, handleSubmit, formState: { errors }, trigger } = useForm({ resolver: zodResolver(currentSchema), mode: "onChange" }) 
+  const { register, handleSubmit, formState: { errors }, trigger, setValue, watch } = useForm({ resolver: zodResolver(currentSchema), mode: "onChange"}) 
 
   const nextStep = async () => {
     const isValid = await trigger()
@@ -16,6 +16,34 @@ function App() {
     }
   }
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1))
+
+  const cepValue = watch("cep")
+  useEffect(()=>{
+    const cleanCep = cepValue?.replace(/\D/g, "")
+    if(cleanCep?.length === 8){
+      const fetchAddress = async () => {
+        try{
+          const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`)
+          const data = await response.json()
+          if(data.erro){
+            setValue("street", "")
+            setValue("neighborhood", "")
+            setValue("city", "")
+            setValue("state", "")
+            alert("this is not a valid CEP")
+            return
+          }
+          setValue("street", data.logradouro, {shouldValidate: true})
+          setValue("neighborhood", data.bairro, {shouldValidate: true})
+          setValue("city", data.localidade, { shouldValidate: true })
+          setValue("state", data.uf, { shouldValidate: true })
+        } catch (error) {
+          console.error("Erro ao buscar o CEP:", error)
+        }
+      }
+      fetchAddress()
+    }
+  }, [cepValue, setValue])
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black p-4 text-white font-sans">

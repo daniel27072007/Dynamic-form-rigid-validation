@@ -26,7 +26,7 @@ export const formStepsSchemas = [
         cep: z
             .string()
             .nonempty({ message: "CEP is required" })
-            .min(9, { message: "Invalid CEP format" }),
+            .min(8, { message: "Invalid CEP format" }),
         
         street: z
             .string()
