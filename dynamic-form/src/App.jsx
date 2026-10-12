@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formStepsSchemas } from "./schemas/formSchema.js"
+import { file } from "zod"
 
 function App() {
   const [ step, setStep ] = useState(1)
@@ -68,6 +69,29 @@ function App() {
       .replace(/(\d{5})(\d{1,3})$/, "$1-$2")
       .substring(0, 9);
   };
+
+  const [filePreview, setFilePreview] = useState(null)
+  
+  const handleFilesChange = (e) => {
+    const files = e.target.files
+    if(files && files.length > 0){
+      const selectedFile = files[0]
+      const fileUrl = URL.createObjectURL(selectedFile)
+      setFilePreview({
+        url: fileUrl,
+        name: selectedFile.name,
+        type: selectedFile.type
+      });
+    }
+  }
+
+  const handleRemoveFile = () => {
+    if(filePreview?.url){
+      URL.revokeObjectURL(filePreview.url)
+    }
+    setFilePreview(null)
+    setValue('file', null, { shouldValidate: true })
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black p-4 text-white font-sans">
