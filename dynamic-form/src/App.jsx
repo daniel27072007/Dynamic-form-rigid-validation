@@ -27,7 +27,7 @@ function App() {
             Step {step} of 3
           </span>
         </div>
-        <form onSubmit={handleSubmit(()=> console.log("data in the form sent"))}>
+        <form onSubmit={handleSubmit(()=> console.log("register user with success"))}>
           <div>
             {step === 1 && (
               <div className="space-y-4">
